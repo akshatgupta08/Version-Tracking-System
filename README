@@ -1,0 +1,10 @@
+The project has been developed during my internship with a fintech company, an Indian subsidiary of a US company. The company is constantly improving its software to match the lenders with the large pool of borrowers by evaluating the borrowers on their payment history and other parameters. 
+
+The project is a version tracking system, which can store the information about lenders and the parameters they use to evaluate and select borrowers.  The project is assisting the developers to make multiple versions of each lender and perform the CRUD operations on each of its versions. Every previous version is recorded and can be visited again.
+For the backend, I node.js has been used to develop the APIs for the CRUD operations and the MongoDB database stores the information regarding the users and the lenders.   The middleware functions have been developed using Express.js.
+
+When users sign up, their credentials (like username and password) are collected. The password is hashed before storing it in the database to ensure security. When users log in, they provide their credentials. The server hashes the provided password and compares it with the hashed password stored in the database.
+Upon successful login, the server generates a JWT (JSON Web Token) that includes payload information (like user ID). This token is signed with a secret key (present in the .env file, not uploaded) to ensure its authenticity. It is present in the local storage and is used for subsequent requests to authenticate the user.
+
+Backend Folder: Contains the code and resources for the server-side logic and APIs.
+Frontend Folder: Contains the code and assets for the client-side interface and user experience.
