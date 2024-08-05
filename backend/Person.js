@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-
+/*This is  the schema for the people collection, which stores the user credentials.*/
 const personSchema = new mongoose.Schema({
    
    
@@ -15,11 +15,10 @@ const personSchema = new mongoose.Schema({
     }
 });
 
+/*Before new user information is saved to the database, the hashed password is assigned.*/
 personSchema.pre("save", async function(next) {
     const person = this;
-    if(!person.isModified("password")) {
-        return next();
-    }
+   
          
     try {
         const salt = await bcrypt.genSalt(10);
@@ -31,48 +30,8 @@ personSchema.pre("save", async function(next) {
     }
 });
 let indicator = 0;
-/*personSchema.pre("findOneAndUpdate", async function(next) {
-    const person = this;
-    console.log("This runs");
-    if(indicator == false) {
-        return next();
-    }
-         
-    try {
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(person.password,salt);
-        person.password = hashedPassword;
-        next();
-    } catch(err) {
-       return next(err);
-    }
-});*/
-/*personSchema.methods.comparePassword = async function(candidatesPassword) {
-    try {
-        const isMatch = await bcrypt.compare(candidatesPassword,this.password);
-        return isMatch;
-    } catch(err) {
-         throw err;
-    }
-}
-personSchema.methods.comparePassForPut = async function(candidatesPassword,pass) {
-    
-    try {
-      const isMatch = await bcrypt.compare(candidatesPassword, pass);
-      console.log("This should be printed");
-      if (!isMatch) {
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(pass, salt);
-        console.log(hashedPassword);
-        return hashedPassword;
 
-      }
-      return isMatch; // Return the comparison result
-    } catch (err) {
-      throw err; // Rethrow the error to be handled by the calling code
-    }
-  };*/
-
+/*Once the user logs in, the function verifies the password.*/
   personSchema.methods.comparePassword = async function(candidatePassword){
     try{
         // Use bcrypt to compare the provided password with the hashed password

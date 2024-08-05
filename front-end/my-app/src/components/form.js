@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, InputGroup, Row, Col, Container } from 'react-bootstrap';
 import {useContext} from "react";
 import noteContext from "./noteContext.js";
-
+/*The form enables the users to enter new lenders in the database*/
 const LenderForm = () => {
   
   const a = useContext(noteContext);  
@@ -10,24 +10,25 @@ const LenderForm = () => {
   const [username, setUsername] = useState('');
   const [parameters, setParameters] = useState([{ name: '', expression: '' }]);
 
+  /*The user sets the unique username of the new lender.*/
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
-
+  /*A parameter is the basis on which a lender selects borrowers*/
   const handleParameterChange = (index, event) => {
     const newParameters = [...parameters];
     newParameters[index][event.target.name] = event.target.value;
     setParameters(newParameters);
   };
-
+/*A parameter holds an expression and a name which specifies what the expression is about.*/
   const addParameter = () => {
     setParameters([...parameters, { name: '', expression: '' }]);
   };
-
+/*Users can delete a paramter*/
   const deleteParameter = (index) => {
     setParameters(parameters.filter((_, i) => i !== index));
   };
-
+/*Once the form is submitted, the data is arranged in the right format, to be processed by the backend.*/
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = {
@@ -44,7 +45,7 @@ const LenderForm = () => {
       obj.filters[i].name = String(formData.parameters[i].name);
       obj.filters[i].expressions = String(formData.parameters[i].expression);
     }
-    /*console.log(formData);*/
+  
     obj = JSON.stringify(obj);
     try {
       const response = await fetch(`http://localhost:3000/lender`, {
@@ -55,10 +56,10 @@ const LenderForm = () => {
         },
         body: obj 
       });
-      console.log(response);
       a.update();
+      alert("You created a new Lender.");
     } catch (err) {
-      console.log('Failed to fetch.');
+      alert("Failed to add the lender.");
     }
     
   };

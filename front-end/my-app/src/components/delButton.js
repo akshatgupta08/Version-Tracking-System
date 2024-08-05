@@ -3,7 +3,7 @@ import {useContext} from "react";
 import noteContext from "./noteContext.js";
 
 export default function DeleteButton({lenderName,versionNum}) {
-   
+  /*The lenderName and the version are passed as props. When the button is clicked, the lender version gets deleted.*/ 
     const a = useContext(noteContext);
 
   const handleClick = async () => {
@@ -18,7 +18,7 @@ export default function DeleteButton({lenderName,versionNum}) {
       },
 
     });
-    console.log("No exception is thrown.");
+    alert("You deleted"+ lenderName + " " + versionNum);
     a.update();
   } catch (err) {
     console.log('Failed to fetch.');

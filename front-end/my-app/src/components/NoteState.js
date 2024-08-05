@@ -1,6 +1,6 @@
 import NoteContext from "./noteContext";
 import {useState} from "react";
-
+/*The notestate.js is used to control the visibility of components at certain times or to deactivate their functionality.*/
 const NoteState = (props)=> {
     const [state,setState] = useState(1);
     const [active, setActive] = useState(true);

@@ -7,17 +7,12 @@ export default function DropdownComponent(){
   const [naam,newnaam] = useState("Lenders Dropdown");
   const a = useContext(noteContext);
 
-  let dd = []; /*= {
-    mainItems: [
-      { name: "FIBE version 1" },
-      { name: "Reg version 2" },
-      { name: "Lanny version 3" }
-    ]
-  };*/
+  let dd = []; 
+ 
 const changeName = (nnn)=> {
   a.changeTable(true);
   a.setActive(false);
-    newnaam(nnn);
+    newnaam(nnn); /*The newnaam variable displays the lender name and version selected by the user.*/
 }
 
 useEffect(() => {
@@ -31,14 +26,15 @@ useEffect(() => {
       console.log(dd);
       setData(dd);
     } catch (err) {
-      console.log("Failed to fetch.");
+      alert("Failed to load the lenders.");
     }
   };
 
   fetchData();
-  //console.log(data);
+  
 }, [a.state]);
-
+/* <Table data = {naam}/>  the element at the end of the code passes the lender name and version to the 
+     table element and the information regarding the lender version is displayed.*/
   return (
     <div style = {{display: 'flex', justifyContent: 'center', alignItems: 'center', height:"300px" ,right: "100px"}}>
     <div className="dropdown dropdown-hover"  style = {{ display: 'block', justifyContent: 'center', alignItems: 'center' ,right: "100px"}}>
@@ -65,7 +61,7 @@ useEffect(() => {
       </ul>
      
       <div style = {{ display: 'block', margin: "50px",position:"sticky", height: "50px"}}>
-         <Table data = {naam}/>
+         <Table data = {naam}/>  
       </div>
     </div>
     </div>

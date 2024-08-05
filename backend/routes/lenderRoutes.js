@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import AllLenders from "../AllLenders.js";
-import {jwtAuthMiddleware, generateToken} from "../jwt.js";
+import {generateToken} from "../jwt.js";
 
 const router =  express.Router();
 const lenderSchema = new mongoose.Schema(
@@ -28,24 +28,20 @@ const lenderSchema = new mongoose.Schema(
         ]
       
       });
-
+//Route for posting information about a new lender or updating the information regarding an already existing lender
 router.post("/",async(req,res)=> {
     try {
     
       let obj = {};
-      console.log("It works till here.");
         let lenderName = req.body.lender;
-        console.log("Well Well Well.");
         const lenderVersion =  mongoose.model(lenderName, lenderSchema); 
         console.log(lenderName);
-        /*const highVers = await lenderVersion.findOne({}, { sort: { version: -1 } });*/
         const highVers = await lenderVersion
   .find({})
   .sort({ version: -1 })
   .limit(1)
   .exec();
-        console.log(highVers);
-        console.log("dfddcfwdcgwe");
+      
         if(highVers.length === 0) {
           req.body.version = 1;
              obj = {
@@ -72,8 +68,7 @@ router.post("/",async(req,res)=> {
           await allLenders.save();
         }
         console.log("Something is working.");
-        // const lenderVersion =  mongoose.model(lenderName, lenderSchema); 
-        //req.body.version = num;
+        
         let lenderVers = new lenderVersion(req.body);
         await lenderVers.save();
         res.status(201).json({ message: "Document saved successfully"});
@@ -86,6 +81,7 @@ router.post("/",async(req,res)=> {
     }
 });
 
+//Route for retrieving all the lenders and their versions.
 router.get("/",async(req,res)=> {
   try{
   
@@ -96,7 +92,7 @@ router.get("/",async(req,res)=> {
     res.status(500).json({error: "Internal server error"});
   }
 })
-
+//Route for getting the information regrading a lender version.
 router.get("/:lenderName/:versionNum",async(req,res)=> {
   try {
   const LenderModel = mongoose.model(req.params.lenderName,lenderSchema);
@@ -107,7 +103,7 @@ router.get("/:lenderName/:versionNum",async(req,res)=> {
     res.status(500).json({error: "Internal server error"});
   }
 }) 
-
+//Route for deleting a lender version
 router.delete("/:lenderName/:versionNum", async(req,res)=> {
  try{
   const LenderModel = mongoose.model(req.params.lenderName,lenderSchema);

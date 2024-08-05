@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-
-const mongoURL = "mongodb://localhost:27017/hotels";
+/*The DataBase is activated*/
+const mongoURL = "mongodb://localhost:27017/verison_tracking";
 mongoose.connect(mongoURL, {
 useNewUrlParser: true,
 useUnifiedTopology: true

@@ -1,31 +1,17 @@
 import express from "express";
 import Person from "../Person.js";
-import {jwtAuthMiddleware, generateToken} from "../jwt.js";
+import {generateToken} from "../jwt.js";
 
 const router = express.Router();
 
        
 
-  router.delete("/:id",async (req,res)=> {
-    try {
-  const personId = req.params.id;
-  console.log(personId);
-  const response = await Person.findByIdAndDelete(personId);
-  if(!response) {
-    return res.status(404).json({error: "Person not found"});
-  }
-  console.log("data deleted");
-  res.status(200).json({Info:"Data deleted"});
-    }catch(err) {
-       console.log(err);
-       res.status(500).json({error: "Internal server Error"});
-    }
-  });
+  
 
-
+/*It handles the signup request*/
   router.post('/signup', async (req, res) =>{
     try{
-        console.log("fgdfewdgevdgev");
+        
         const data = req.body // Assuming the request body contains the person data
 
         // Create a new Person document using the Mongoose model
@@ -39,9 +25,9 @@ const router = express.Router();
             id: response.id,
             username: response.username
         }
-        console.log(JSON.stringify(payload));
+    
         const token = generateToken(payload);
-        console.log("Token is : ", token);
+  
 
         res.status(200).json({response: response, token: token});
     }

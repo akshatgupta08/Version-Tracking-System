@@ -1,5 +1,6 @@
 import mongoose from "mongoose"; /*Maybe I do not need this.*/
-
+/*The schema for each lender collection has benn stated. There is a separate collection for each lender which
+holds the lender versions and their corresponding paramaters in the filters array.*/
 const lenderSchema = new mongoose.Schema(
   {
   lender:{

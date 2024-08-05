@@ -7,7 +7,9 @@ const SignupForm = () => {
 
   const navigate = useNavigate();
   const a = useContext(noteContext);  
-
+  /*Before loading the home page, the useEffect() function checks if the user
+  already has the token in the local storage, which would mean that the 
+  user does not have to login again. The user will be directed to the home page.*/
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
@@ -28,7 +30,7 @@ const SignupForm = () => {
           } 
         }
       } catch (err) {
-        console.error('Failed to fetch:', err); 
+        alert("Log in if you have previously."); 
       }
     };
 
@@ -39,7 +41,7 @@ const SignupForm = () => {
     
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+/*If the user logs in again, then the credentials are checked by the backend and a token is returned.*/
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -59,11 +61,8 @@ const SignupForm = () => {
         response = await response.json();
          let value = response.token;
          localStorage.setItem("token",value);
-        //let value = localStorage.getItem("token");
-        //console.log("gdcvdvcdgcvgdvcgdvcgvv");
-        //console.log(value);
-        console.log(response.token);
-         navigate("/Home");
+         console.log(response.token);
+         navigate("/Home"); /*The user is directed to the home page.*/
          a.changeNav(false);
       }else {
         alert("The username is already present");
